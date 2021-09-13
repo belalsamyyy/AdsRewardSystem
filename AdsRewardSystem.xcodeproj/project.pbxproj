@@ -1,0 +1,450 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		41C6850D26EEABFB0016EB26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41C6850C26EEABFB0016EB26 /* Main.storyboard */; };
+		41C6851026EECCBE0016EB26 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6850F26EECCBE0016EB26 /* DispatchQueue+Extensions.swift */; };
+		B3A9340B4278F9535409E4C5 /* Pods_AdsRewardSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 940573DEFB9EC819E11A50A4 /* Pods_AdsRewardSystem.framework */; };
+		D93A52FB26EDFD3E003482D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93A52FA26EDFD3E003482D2 /* AppDelegate.swift */; };
+		D93A52FD26EDFD3E003482D2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93A52FC26EDFD3E003482D2 /* SceneDelegate.swift */; };
+		D93A52FF26EDFD3E003482D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93A52FE26EDFD3E003482D2 /* ViewController.swift */; };
+		D93A530426EDFD41003482D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D93A530326EDFD41003482D2 /* Assets.xcassets */; };
+		D93A530726EDFD41003482D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D93A530526EDFD41003482D2 /* LaunchScreen.storyboard */; };
+		D93A531326EDFDBE003482D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93A531226EDFDBE003482D2 /* Constants.swift */; };
+		D93A531526EDFDCD003482D2 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93A531426EDFDCD003482D2 /* UserDefaultsManager.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2F434701E3BCA4B7ACCC2425 /* Pods-AdsRewardSystem.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdsRewardSystem.debug.xcconfig"; path = "Target Support Files/Pods-AdsRewardSystem/Pods-AdsRewardSystem.debug.xcconfig"; sourceTree = "<group>"; };
+		3B4B127E79B1D6125476497A /* Pods-AdsRewardSystem.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdsRewardSystem.release.xcconfig"; path = "Target Support Files/Pods-AdsRewardSystem/Pods-AdsRewardSystem.release.xcconfig"; sourceTree = "<group>"; };
+		41C6850C26EEABFB0016EB26 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		41C6850F26EECCBE0016EB26 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
+		940573DEFB9EC819E11A50A4 /* Pods_AdsRewardSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdsRewardSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D93A52F726EDFD3D003482D2 /* AdsRewardSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdsRewardSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D93A52FA26EDFD3E003482D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D93A52FC26EDFD3E003482D2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		D93A52FE26EDFD3E003482D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D93A530326EDFD41003482D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D93A530626EDFD41003482D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D93A530826EDFD41003482D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D93A531226EDFDBE003482D2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D93A531426EDFDCD003482D2 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D93A52F426EDFD3D003482D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3A9340B4278F9535409E4C5 /* Pods_AdsRewardSystem.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04A9FF2888FCE24455CA0907 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2F434701E3BCA4B7ACCC2425 /* Pods-AdsRewardSystem.debug.xcconfig */,
+				3B4B127E79B1D6125476497A /* Pods-AdsRewardSystem.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		31F925F86654E25BFD453A0D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				940573DEFB9EC819E11A50A4 /* Pods_AdsRewardSystem.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		41C6850E26EECCA10016EB26 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				41C6850F26EECCBE0016EB26 /* DispatchQueue+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D93A52EE26EDFD3D003482D2 = {
+			isa = PBXGroup;
+			children = (
+				D93A52F926EDFD3D003482D2 /* AdsRewardSystem */,
+				D93A52F826EDFD3D003482D2 /* Products */,
+				04A9FF2888FCE24455CA0907 /* Pods */,
+				31F925F86654E25BFD453A0D /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D93A52F826EDFD3D003482D2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D93A52F726EDFD3D003482D2 /* AdsRewardSystem.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D93A52F926EDFD3D003482D2 /* AdsRewardSystem */ = {
+			isa = PBXGroup;
+			children = (
+				D93A52FA26EDFD3E003482D2 /* AppDelegate.swift */,
+				D93A52FC26EDFD3E003482D2 /* SceneDelegate.swift */,
+				D93A530E26EDFD4D003482D2 /* Model */,
+				D93A530F26EDFD54003482D2 /* View */,
+				D93A531026EDFD5B003482D2 /* Controller */,
+				D93A531626EDFE06003482D2 /* Utilities */,
+				D93A531726EDFE10003482D2 /* Helpers */,
+				41C6850E26EECCA10016EB26 /* Extensions */,
+				D93A530326EDFD41003482D2 /* Assets.xcassets */,
+				D93A530826EDFD41003482D2 /* Info.plist */,
+			);
+			path = AdsRewardSystem;
+			sourceTree = "<group>";
+		};
+		D93A530E26EDFD4D003482D2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D93A530F26EDFD54003482D2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D93A530526EDFD41003482D2 /* LaunchScreen.storyboard */,
+				41C6850C26EEABFB0016EB26 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D93A531026EDFD5B003482D2 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D93A52FE26EDFD3E003482D2 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D93A531626EDFE06003482D2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D93A531426EDFDCD003482D2 /* UserDefaultsManager.swift */,
+				D93A531226EDFDBE003482D2 /* Constants.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		D93A531726EDFE10003482D2 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D93A52F626EDFD3D003482D2 /* AdsRewardSystem */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D93A530B26EDFD41003482D2 /* Build configuration list for PBXNativeTarget "AdsRewardSystem" */;
+			buildPhases = (
+				2764B09DF85F21D172237140 /* [CP] Check Pods Manifest.lock */,
+				D93A52F326EDFD3D003482D2 /* Sources */,
+				D93A52F426EDFD3D003482D2 /* Frameworks */,
+				D93A52F526EDFD3D003482D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AdsRewardSystem;
+			productName = AdsRewardSystem;
+			productReference = D93A52F726EDFD3D003482D2 /* AdsRewardSystem.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D93A52EF26EDFD3D003482D2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					D93A52F626EDFD3D003482D2 = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+				};
+			};
+			buildConfigurationList = D93A52F226EDFD3D003482D2 /* Build configuration list for PBXProject "AdsRewardSystem" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D93A52EE26EDFD3D003482D2;
+			productRefGroup = D93A52F826EDFD3D003482D2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D93A52F626EDFD3D003482D2 /* AdsRewardSystem */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D93A52F526EDFD3D003482D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D93A530726EDFD41003482D2 /* LaunchScreen.storyboard in Resources */,
+				D93A530426EDFD41003482D2 /* Assets.xcassets in Resources */,
+				41C6850D26EEABFB0016EB26 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2764B09DF85F21D172237140 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AdsRewardSystem-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D93A52F326EDFD3D003482D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D93A52FF26EDFD3E003482D2 /* ViewController.swift in Sources */,
+				D93A531526EDFDCD003482D2 /* UserDefaultsManager.swift in Sources */,
+				D93A52FB26EDFD3E003482D2 /* AppDelegate.swift in Sources */,
+				41C6851026EECCBE0016EB26 /* DispatchQueue+Extensions.swift in Sources */,
+				D93A52FD26EDFD3E003482D2 /* SceneDelegate.swift in Sources */,
+				D93A531326EDFDBE003482D2 /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D93A530526EDFD41003482D2 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D93A530626EDFD41003482D2 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D93A530926EDFD41003482D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D93A530A26EDFD41003482D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D93A530C26EDFD41003482D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F434701E3BCA4B7ACCC2425 /* Pods-AdsRewardSystem.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8A4HTMPS6P;
+				INFOPLIST_FILE = AdsRewardSystem/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hwaya.AdsRewardSystem;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D93A530D26EDFD41003482D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3B4B127E79B1D6125476497A /* Pods-AdsRewardSystem.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8A4HTMPS6P;
+				INFOPLIST_FILE = AdsRewardSystem/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hwaya.AdsRewardSystem;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D93A52F226EDFD3D003482D2 /* Build configuration list for PBXProject "AdsRewardSystem" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D93A530926EDFD41003482D2 /* Debug */,
+				D93A530A26EDFD41003482D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D93A530B26EDFD41003482D2 /* Build configuration list for PBXNativeTarget "AdsRewardSystem" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D93A530C26EDFD41003482D2 /* Debug */,
+				D93A530D26EDFD41003482D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D93A52EF26EDFD3D003482D2 /* Project object */;
+}
