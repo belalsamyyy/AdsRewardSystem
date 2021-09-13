@@ -10,7 +10,7 @@ import UIKit
 import DesignX
 
 class ViewController: UIViewController, GADFullScreenContentDelegate {
-  
+ 
   // coins label
   @IBOutlet weak var coinCountLabel: UILabel!
 
@@ -106,43 +106,57 @@ class ViewController: UIViewController, GADFullScreenContentDelegate {
   // MARK: - actions
     
   @IBAction func interstitialAdTapped(_ sender: Any) {
-    if let ad = interstitialAd {
-        //success
-        loadInterstitialAd()
-        ad.present(fromRootViewController: self)
-    } else {
-      // the Ad failed to present .. show alert message
-      let alert = UIAlertController(title: "Interstitial ad isn't available yet.", message: "The Interstitial ad cannot be shown at this time",preferredStyle: .alert)
-      let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] action in
-          self?.loadInterstitialAd()
-      })
-      alert.addAction(alertAction)
-      self.present(alert, animated: true, completion: nil)
-    }
+
+    DispatchQueue.background(background: {
+        // do something in background
+        self.loadInterstitialAd()
+
+    }, completion:{
+        // when background job finished, do something in main thread
+        if let ad = self.interstitialAd {
+            //success
+            ad.present(fromRootViewController: self)
+        } else {
+          // the Ad failed to present .. show alert message
+          let alert = UIAlertController(title: "Interstitial ad isn't available yet.", message: "The Interstitial ad cannot be shown at this time",preferredStyle: .alert)
+          let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] action in
+              self?.loadInterstitialAd()
+          })
+          alert.addAction(alertAction)
+          self.present(alert, animated: true, completion: nil)
+        }
+    })
   }
     
 
   @IBAction func rewardVideoTapped(_ sender: AnyObject) {
-    
-    if let ad = rewardedAd {
-       // reward the user
-       loadRewardVideoAd()
-       ad.present(fromRootViewController: self) {
-       let reward = ad.adReward
-       print("Reward received with \(reward.amount) coins")
-       self.earnCoins(NSInteger(truncating: reward.amount))
-     }
-      
-     } else {
-        
-      // the Ad failed to present .. show alert message
-      let alert = UIAlertController(title: "Rewarded ad isn't available yet.", message: "The rewarded ad cannot be shown at this time",preferredStyle: .alert)
-      let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] action in
-          self?.loadRewardVideoAd()
-      })
-      alert.addAction(alertAction)
-      self.present(alert, animated: true, completion: nil)
-    }
+
+    DispatchQueue.background(background: {
+        // do something in background
+        self.loadRewardVideoAd()
+
+    }, completion:{
+        // when background job finished, do something in main thread
+        if let ad = self.rewardedAd {
+           // reward the user
+           ad.present(fromRootViewController: self) {
+           let reward = ad.adReward
+           print("Reward received with \(reward.amount) coins")
+           self.earnCoins(NSInteger(truncating: reward.amount))
+         }
+          
+         } else {
+            
+          // the Ad failed to present .. show alert message
+          let alert = UIAlertController(title: "Rewarded ad isn't available yet.", message: "The rewarded ad cannot be shown at this time",preferredStyle: .alert)
+          let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] action in
+              self?.loadRewardVideoAd()
+          })
+          alert.addAction(alertAction)
+          self.present(alert, animated: true, completion: nil)
+        }
+    })
+
   }
 
 }
