@@ -4,15 +4,37 @@
 //
 //  Created by Belal Samy on 12/09/2021.
 //
-
-import GoogleMobileAds
 import UIKit
+import GoogleMobileAds
+import youtube_ios_player_helper
 import DesignX
 
 class ViewController: UIViewController, GADFullScreenContentDelegate {
- 
-  // coins label
+  
+  // Video player
+  let videoUrl = "https://www.youtube.com/watch?v=4B7UfUX2wz4"
+  var videoPlayer = YTPlayerView()
+    
+  // Video state
+  enum VideoState {
+    case notStarted
+    case playing
+    case paused
+    case ended
+  }
+    
+  // The countdown timer.
+  @IBOutlet weak var timeRemainingLabel: UILabel!
+    
+  var timer: Timer?
+  var video = VideoState.notStarted
+  var timeRemaining = 30 // seconds
+  var pauseDate: Date?
+  var previousFireDate: Date?
+    
+  // coins
   @IBOutlet weak var coinCountLabel: UILabel!
+  let rewardValue = 10
 
   // The banner ad
     private var bannerAd: GADBannerView = {
@@ -34,9 +56,70 @@ class ViewController: UIViewController, GADFullScreenContentDelegate {
     
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     coinCountLabel.text = "Coins: \(Defaults.coins)"
     loadBannerAd()
+    
+    // youtube video player
+    startYoutubeVideo(url: videoUrl)
+    
+    // Pause timer when application is backgrounded.
+    NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
+    // Resume timer when application is returned to foreground.
+    NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+
+    // start the timer
+    startTimer()
   }
+    
+    
+// MARK: - Timer
+    
+    fileprivate func startTimer() {
+        video = .playing
+        loadRewardVideoAd()
+        
+        print("time remaining: \(timeRemaining)")
+        timeRemainingLabel.text = "time remaining: \(timeRemaining)"
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(tick(_:)), userInfo: nil, repeats: true)
+    }
+    
+    @objc func tick(_ timer: Timer) {
+        timeRemaining -= 1
+        if timeRemaining > 0 {
+            print("time remaining: \(timeRemaining)")
+            timeRemainingLabel.text = "time remaining: \(timeRemaining)"
+        } else {
+          endTimer()
+        }
+    }
+    
+    fileprivate func endTimer() {
+        video = .ended
+        print("The timer ends !")
+        timeRemainingLabel.text = "The timer ends !"
+        self.showToast(message: "earn \(rewardValue) coins", font: .systemFont(ofSize: 18))
+
+        timer?.invalidate()
+        timer = nil
+        earnCoins(rewardValue)
+      }
+    
+    
+//MARK: - Youtube Video player
+    
+    func startYoutubeVideo(url: String) {
+        view.addSubview(videoPlayer)
+        videoPlayer.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        videoPlayer.layout(X: .center(nil), W: .equal(nil, 0.95), Y: .top(timeRemainingLabel, 0), H: .fixed(250))
+        
+        // youtube video
+        videoPlayer.delegate = self
+        videoPlayer.load(withVideoId: url.youtubeID!, playerVars: ["playsinline": "1"])
+        print("Youtube ID: \(url.youtubeID!)")
+    }
+    
     
 // MARK: - GADFullScreenContentDelegate
     
@@ -56,7 +139,39 @@ class ViewController: UIViewController, GADFullScreenContentDelegate {
       self.present(alert, animated: true, completion: nil)
     }
     
-  //MARK: - functions
+    
+    // MARK: - Pause || and Resume ...
+        
+        @objc func applicationDidEnterBackground(_ notification: Notification) {
+          // Pause the timer if it is currently playing.
+          if video != .playing {
+            return
+          }
+          video = .paused
+
+          // Record the relevant pause times.
+          pauseDate = Date()
+          previousFireDate = timer?.fireDate
+
+          // Prevent the timer from firing while app is in background.
+          timer?.fireDate = Date.distantFuture
+        }
+
+        @objc func applicationDidBecomeActive(_ notification: Notification) {
+          // Resume the timer if it is currently paused.
+          if video != .paused {
+            return
+          }
+          video = .playing
+
+          // Calculate amount of time the app was paused.
+          let pauseTime = (pauseDate?.timeIntervalSinceNow)! * -1
+
+          // Set the timer to start firing again.
+          timer?.fireDate = (previousFireDate?.addingTimeInterval(pauseTime))!
+        }
+    
+  //MARK: - Ads
     
     fileprivate func loadBannerAd() {
         bannerAd.rootViewController = self
@@ -94,6 +209,7 @@ class ViewController: UIViewController, GADFullScreenContentDelegate {
 
     
   fileprivate func earnCoins(_ coins: NSInteger) {
+      print("Reward received with \(rewardValue) coins")
       Defaults.coins += coins
       coinCountLabel.text = "Coins: \(Defaults.coins)"
   }
@@ -140,9 +256,7 @@ class ViewController: UIViewController, GADFullScreenContentDelegate {
         if let ad = self.rewardedAd {
            // reward the user
            ad.present(fromRootViewController: self) {
-           let reward = ad.adReward
-           print("Reward received with \(reward.amount) coins")
-           self.earnCoins(NSInteger(truncating: reward.amount))
+           self.earnCoins(self.rewardValue)
          }
           
          } else {
@@ -159,4 +273,18 @@ class ViewController: UIViewController, GADFullScreenContentDelegate {
 
   }
 
+}
+
+
+extension ViewController: YTPlayerViewDelegate {
+    func playerViewPreferredWebViewBackgroundColor(_ playerView: YTPlayerView) -> UIColor {
+        return UIColor.black
+    }
+    
+//    func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
+//        // Create a Custom loading view
+//        // let customLoadingView = UIView()
+//        // return customLoadingView
+//    }
+    
 }

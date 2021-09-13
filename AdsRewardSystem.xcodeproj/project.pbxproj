@@ -17,6 +17,8 @@
 		D93A530726EDFD41003482D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D93A530526EDFD41003482D2 /* LaunchScreen.storyboard */; };
 		D93A531326EDFDBE003482D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93A531226EDFDBE003482D2 /* Constants.swift */; };
 		D93A531526EDFDCD003482D2 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93A531426EDFDCD003482D2 /* UserDefaultsManager.swift */; };
+		D954C45A26EF9E8300B0F95F /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D954C45926EF9E8200B0F95F /* UIViewController+Extensions.swift */; };
+		D954C45C26EFA86500B0F95F /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D954C45B26EFA86500B0F95F /* String+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		D93A530826EDFD41003482D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D93A531226EDFDBE003482D2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D93A531426EDFDCD003482D2 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		D954C45926EF9E8200B0F95F /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		D954C45B26EFA86500B0F95F /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 			isa = PBXGroup;
 			children = (
 				41C6850F26EECCBE0016EB26 /* DispatchQueue+Extensions.swift */,
+				D954C45926EF9E8200B0F95F /* UIViewController+Extensions.swift */,
+				D954C45B26EFA86500B0F95F /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -247,6 +253,8 @@
 				D93A52FF26EDFD3E003482D2 /* ViewController.swift in Sources */,
 				D93A531526EDFDCD003482D2 /* UserDefaultsManager.swift in Sources */,
 				D93A52FB26EDFD3E003482D2 /* AppDelegate.swift in Sources */,
+				D954C45A26EF9E8300B0F95F /* UIViewController+Extensions.swift in Sources */,
+				D954C45C26EFA86500B0F95F /* String+Extensions.swift in Sources */,
 				41C6851026EECCBE0016EB26 /* DispatchQueue+Extensions.swift in Sources */,
 				D93A52FD26EDFD3E003482D2 /* SceneDelegate.swift in Sources */,
 				D93A531326EDFDBE003482D2 /* Constants.swift in Sources */,
