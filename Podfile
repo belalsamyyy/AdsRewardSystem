@@ -6,8 +6,5 @@ target 'AdsRewardSystem' do
   use_frameworks!
 
   # Pods for AdsRewardSystem
-  pod 'Google-Mobile-Ads-SDK'
-  pod 'youtube-ios-player-helper'
-  pod 'DesignX'
 
 end

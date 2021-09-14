@@ -26,7 +26,6 @@ class ViewController: UIViewController {
     // The reward timer.
     var rewardTimer: Timer?
     var timeRemaining = 0 // in seconds
-    var lastPausedTime: Int?
     
     var pauseDate: Date?
     var previousFireDate: Date?
@@ -125,8 +124,9 @@ class ViewController: UIViewController {
     
     func endTimer() {
         timerState = .ended
-        timeRemaining = 0
         print("The timer ends !")
+        
+        timeRemaining = 0
         timeRemainingLabel.text = "The timer ends !"
         
         rewardTimer?.invalidate()
@@ -346,6 +346,7 @@ extension ViewController: YTPlayerViewDelegate {
           case .ended:
               print("ended")
               endTimer()
+              rewardTimer?.invalidate()
 
           case .playing:
               print("playing")
@@ -356,7 +357,8 @@ extension ViewController: YTPlayerViewDelegate {
               pauseTimer()
               
           case .buffering:
-              print("buffering")
+              print("buffering") // replay "i think"
+              timerState = .notStarted
               
           case .cued:
               print("cued")
