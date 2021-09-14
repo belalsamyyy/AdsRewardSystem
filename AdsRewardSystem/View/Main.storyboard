@@ -19,11 +19,11 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coins: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHV-lO-TRS" userLabel="CoinsLabel">
                                 <rect key="frame" x="145.5" y="119" width="123.5" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="systemYellowColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OEB-ud-V87" userLabel="RewardVideoAd">
-                                <rect key="frame" x="115" y="710" width="185" height="42"/>
+                                <rect key="frame" x="115" y="688" width="185" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title="Reward Video Ad">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -42,7 +42,7 @@
                                     <action selector="interstitialAdTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="iel-0L-BoV"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time remaining: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3f2-UP-Od1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="time reamaining: 00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3f2-UP-Od1">
                                 <rect key="frame" x="0.0" y="176" width="414" height="149"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
@@ -54,7 +54,7 @@
                         <constraints>
                             <constraint firstItem="3f2-UP-Od1" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Cuc-qX-zyQ"/>
                             <constraint firstItem="fNf-0e-yby" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="137" id="Fba-0t-NG7"/>
-                            <constraint firstItem="OEB-ud-V87" firstAttribute="top" secondItem="fNf-0e-yby" secondAttribute="bottom" constant="57" id="MZ5-iv-8ka"/>
+                            <constraint firstItem="OEB-ud-V87" firstAttribute="top" secondItem="fNf-0e-yby" secondAttribute="bottom" constant="35" id="MZ5-iv-8ka"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="fNf-0e-yby" secondAttribute="trailing" constant="136" id="Oyh-wz-VoM"/>
                             <constraint firstItem="fNf-0e-yby" firstAttribute="top" secondItem="3f2-UP-Od1" secondAttribute="bottom" constant="286" id="Plz-qB-UAg"/>
                             <constraint firstItem="iHV-lO-TRS" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="75" id="bZQ-tO-hoP"/>
@@ -79,6 +79,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

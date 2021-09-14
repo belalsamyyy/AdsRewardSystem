@@ -9,11 +9,46 @@ import GoogleMobileAds
 import youtube_ios_player_helper
 import DesignX
 
-class ViewController: UIViewController, GADFullScreenContentDelegate {
-  
-  // Video player
+class ViewController: UIViewController {
+    
+  //MARK: - outlets
+
+  @IBOutlet weak var timeRemainingLabel: UILabel!
+  @IBOutlet weak var coinCountLabel: UILabel!
+
+    
+  //MARK: - variables
+    
+    // The video player
+    var YoutubePlayer = YTPlayerView()
+    var videoState = VideoState.notStarted
+    
+    // The reward timer.
+    var rewardTimer: Timer?
+    var timeRemaining = 0 // in seconds
+    var pauseDate: Date?
+    var previousFireDate: Date?
+    
+    // The banner ad
+    private var bannerAd: GADBannerView = {
+      let banner = GADBannerView()
+      banner.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+      banner.load(GADRequest())
+      banner.backgroundColor = .lightGray
+      return banner
+    }()
+      
+    // The interstitial ad
+    var interstitialAd: GADInterstitialAd?
+      
+    // The rewarded video ad
+    var rewardedAd: GADRewardedAd?
+
+    
+  //MARK: - constants
+
+  // Video Url
   let videoUrl = "https://www.youtube.com/watch?v=4B7UfUX2wz4"
-  var videoPlayer = YTPlayerView()
     
   // Video state
   enum VideoState {
@@ -22,156 +57,141 @@ class ViewController: UIViewController, GADFullScreenContentDelegate {
     case paused
     case ended
   }
-    
-  // The countdown timer.
-  @IBOutlet weak var timeRemainingLabel: UILabel!
-    
-  var timer: Timer?
-  var video = VideoState.notStarted
-  var timeRemaining = 30 // seconds
-  var pauseDate: Date?
-  var previousFireDate: Date?
-    
-  // coins
-  @IBOutlet weak var coinCountLabel: UILabel!
-  let rewardValue = 10
 
-  // The banner ad
-    private var bannerAd: GADBannerView = {
-        let banner = GADBannerView()
-        banner.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        banner.load(GADRequest())
-        banner.backgroundColor = .lightGray
-        return banner
-    }()
+  // reward
+  let rewardValue = 5 // earn 5 coins
+  let rewardFrequency = 5 // every 5 seconds
+  
     
-  // The interstitial ad
-  var interstitialAd: GADInterstitialAd?
-    
-  // The rewarded video ad
-  var rewardedAd: GADRewardedAd?
-    
-    
-//MARK: - viewDidLoad
-    
+  //MARK: - lifecycle
+  
   override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    coinCountLabel.text = "Coins: \(Defaults.coins)"
-    loadBannerAd()
-    
-    // youtube video player
-    startYoutubeVideo(url: videoUrl)
-    
-    // Pause timer when application is backgrounded.
-    NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+      super.viewDidLoad()
+      
+      coinCountLabel.text = "Coins: \(Defaults.coins)"
+      loadBannerAd()
+      
+      // youtube video player
+      startYoutubeVideo(url: videoUrl)
+      
+      // Pause timer when application is backgrounded.
+      NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
 
-    // Resume timer when application is returned to foreground.
-    NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-
-    // start the timer
-    startTimer()
+      // Resume timer when application is returned to foreground.
+      NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+      
   }
     
     
-// MARK: - Timer
+  //MARK: - functions - Reward Timer
     
-    fileprivate func startTimer() {
-        video = .playing
-        loadRewardVideoAd()
+    func startTimer() {
         
-        print("time remaining: \(timeRemaining)")
-        timeRemainingLabel.text = "time remaining: \(timeRemaining)"
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(tick(_:)), userInfo: nil, repeats: true)
+        if videoState == .notStarted {
+            getVideoDuration()
+        }
+        
+        videoState = .playing
+        rewardTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerTick), userInfo: nil, repeats: true)
     }
     
-    @objc func tick(_ timer: Timer) {
-        timeRemaining -= 1
+    @objc func timerTick() {
         if timeRemaining > 0 {
-            print("time remaining: \(timeRemaining)")
-            timeRemainingLabel.text = "time remaining: \(timeRemaining)"
+            updateTimeRemaining()
         } else {
-          endTimer()
+            endTimer()
         }
     }
     
-    fileprivate func endTimer() {
-        video = .ended
+    
+    // convert seconds into minutes and seconds
+    func minutesAndSeconds(from seconds: Int) -> (Int, Int) {
+        return (seconds / 60, seconds % 60)
+    }
+    
+    func updateTimeRemaining() {
+        timeRemaining -= 1
+        let (minutes, seconds) = minutesAndSeconds(from: timeRemaining)
+        timeRemainingLabel.text = "time remaining: \(minutes.twoDigits()):\(seconds.twoDigits())"
+        print("remaining => \(minutes.twoDigits()):\(seconds.twoDigits())")
+        
+        // reward the user every "n" seconds with "n" coins
+        if seconds % rewardFrequency == 0 {
+            earnCoins(rewardValue)
+        }
+    }
+    
+    func endTimer() {
+        videoState = .ended
+        timeRemaining = 0
         print("The timer ends !")
         timeRemainingLabel.text = "The timer ends !"
-        self.showToast(message: "earn \(rewardValue) coins", font: .systemFont(ofSize: 18))
+        
+        rewardTimer?.invalidate()
+        rewardTimer = nil
+    }
+    
+    func pauseTimer() {
+        // Pause the timer if it is currently playing.
+        if videoState != .playing {
+          return
+        }
+        videoState = .paused
 
-        timer?.invalidate()
-        timer = nil
-        earnCoins(rewardValue)
-      }
+        // Record the relevant pause times.
+        pauseDate = Date()
+        previousFireDate = rewardTimer?.fireDate
+
+        // Prevent the timer from firing while app is in background.
+        rewardTimer?.fireDate = Date.distantFuture
+    }
+    
+    func resumeTimer() {
+        // Resume the timer if it is currently paused.
+        if videoState != .paused {
+          return
+        }
+        videoState = .playing
+
+        // Calculate amount of time the app was paused.
+        let pauseTime = (pauseDate?.timeIntervalSinceNow)! * -1
+
+        // Set the timer to start firing again.
+        rewardTimer?.fireDate = (previousFireDate?.addingTimeInterval(pauseTime))!
+    }
     
     
-//MARK: - Youtube Video player
+    // Pause timer in background and resume when comeback
+    
+    @objc func applicationDidEnterBackground(_ notification: Notification) {
+        self.pauseTimer()
+    }
+
+    @objc func applicationDidBecomeActive(_ notification: Notification) {
+        self.resumeTimer()
+    }
+    
+    
+//MARK: - functions - Youtube Video player
     
     func startYoutubeVideo(url: String) {
-        view.addSubview(videoPlayer)
-        videoPlayer.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-        videoPlayer.layout(X: .center(nil), W: .equal(nil, 0.95), Y: .top(timeRemainingLabel, 0), H: .fixed(250))
+        // youtube video view
+        view.addSubview(YoutubePlayer)
+        YoutubePlayer.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        YoutubePlayer.layout(X: .center(nil), W: .equal(nil, 0.95), Y: .top(timeRemainingLabel, 0), H: .fixed(250))
         
         // youtube video
-        videoPlayer.delegate = self
-        videoPlayer.load(withVideoId: url.youtubeID!, playerVars: ["playsinline": "1"])
-        print("Youtube ID: \(url.youtubeID!)")
+        YoutubePlayer.delegate = self
+        YoutubePlayer.load(withVideoId: url.youtubeID!, playerVars: ["playsinline": "1"])
     }
     
-    
-// MARK: - GADFullScreenContentDelegate
-    
-    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-      print("ad presented.")
-    }
-
-    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-      print("Ad dismissed.")
-    }
-
-    func ad(_ ad: GADFullScreenPresentingAd,didFailToPresentFullScreenContentWithError error: Error) {
-      print("Ad failed to present with error: \(error.localizedDescription).")
-      let alert = UIAlertController(title: "Ad failed to present", message: "The Ad could not be presented.", preferredStyle: .alert)
-      let alertAction = UIAlertAction(title: "Try Again", style: .cancel, handler: { [weak self] action in self?.loadRewardVideoAd() })
-      alert.addAction(alertAction)
-      self.present(alert, animated: true, completion: nil)
-    }
-    
-    
-    // MARK: - Pause || and Resume ...
-        
-        @objc func applicationDidEnterBackground(_ notification: Notification) {
-          // Pause the timer if it is currently playing.
-          if video != .playing {
-            return
-          }
-          video = .paused
-
-          // Record the relevant pause times.
-          pauseDate = Date()
-          previousFireDate = timer?.fireDate
-
-          // Prevent the timer from firing while app is in background.
-          timer?.fireDate = Date.distantFuture
+    func getVideoDuration() {
+        self.YoutubePlayer.duration { result, error in
+            self.timeRemaining = Int(result)
         }
-
-        @objc func applicationDidBecomeActive(_ notification: Notification) {
-          // Resume the timer if it is currently paused.
-          if video != .paused {
-            return
-          }
-          video = .playing
-
-          // Calculate amount of time the app was paused.
-          let pauseTime = (pauseDate?.timeIntervalSinceNow)! * -1
-
-          // Set the timer to start firing again.
-          timer?.fireDate = (previousFireDate?.addingTimeInterval(pauseTime))!
-        }
+    }
     
-  //MARK: - Ads
+  //MARK: - functions - Admob Ads
     
     fileprivate func loadBannerAd() {
         bannerAd.rootViewController = self
@@ -206,85 +226,140 @@ class ViewController: UIViewController, GADFullScreenContentDelegate {
       self.rewardedAd?.fullScreenContentDelegate = self
     }
   }
+    
+    
+    func presentinterstitialAd() {
+       DispatchQueue.background(background: {
+           // do something in background
+           self.loadInterstitialAd()
+
+       }, completion:{
+           // when background job finished, do something in main thread
+           if let ad = self.interstitialAd {
+               //success
+               ad.present(fromRootViewController: self)
+           } else {
+             // the Ad failed to present .. show alert message
+             let alert = UIAlertController(title: "Interstitial ad isn't available yet.", message: "The Interstitial ad cannot be shown at this time",preferredStyle: .alert)
+             let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] action in
+                 self?.loadInterstitialAd()
+             })
+             alert.addAction(alertAction)
+             self.present(alert, animated: true, completion: nil)
+           }
+       })
+    }
+       
+       
+    func presentRewardVideo() {
+       DispatchQueue.background(background: {
+           // do something in background
+           self.loadRewardVideoAd()
+
+       }, completion:{
+           // when background job finished, do something in main thread
+           if let ad = self.rewardedAd {
+              // reward the user
+              ad.present(fromRootViewController: self) {
+              self.earnCoins(self.rewardValue)
+            }
+             
+            } else {
+               
+             // the Ad failed to present .. show alert message
+             let alert = UIAlertController(title: "Rewarded ad isn't available yet.", message: "The rewarded ad cannot be shown at this time",preferredStyle: .alert)
+             let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] action in
+                 self?.loadRewardVideoAd()
+             })
+             alert.addAction(alertAction)
+             self.present(alert, animated: true, completion: nil)
+           }
+       })
+    }
 
     
+  //MARK: - functions - coins
+  
   fileprivate func earnCoins(_ coins: NSInteger) {
-      print("Reward received with \(rewardValue) coins")
+      print("Reward received with \(coins) coins")
       Defaults.coins += coins
       coinCountLabel.text = "Coins: \(Defaults.coins)"
+      let rewardMessage = coins > 1 ? " +\(coins) coin" : " +\(coins) coins"
+      self.showToast(message: rewardMessage, font: .systemFont(ofSize: 18))
   }
     
  fileprivate func loseCoins(_ coins: NSInteger) {
     Defaults.coins -= coins
     coinCountLabel.text = "Coins: \(Defaults.coins)"
  }
+    
 
   // MARK: - actions
     
   @IBAction func interstitialAdTapped(_ sender: Any) {
-
-    DispatchQueue.background(background: {
-        // do something in background
-        self.loadInterstitialAd()
-
-    }, completion:{
-        // when background job finished, do something in main thread
-        if let ad = self.interstitialAd {
-            //success
-            ad.present(fromRootViewController: self)
-        } else {
-          // the Ad failed to present .. show alert message
-          let alert = UIAlertController(title: "Interstitial ad isn't available yet.", message: "The Interstitial ad cannot be shown at this time",preferredStyle: .alert)
-          let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] action in
-              self?.loadInterstitialAd()
-          })
-          alert.addAction(alertAction)
-          self.present(alert, animated: true, completion: nil)
-        }
-    })
+    presentinterstitialAd()
   }
     
 
   @IBAction func rewardVideoTapped(_ sender: AnyObject) {
-
-    DispatchQueue.background(background: {
-        // do something in background
-        self.loadRewardVideoAd()
-
-    }, completion:{
-        // when background job finished, do something in main thread
-        if let ad = self.rewardedAd {
-           // reward the user
-           ad.present(fromRootViewController: self) {
-           self.earnCoins(self.rewardValue)
-         }
-          
-         } else {
-            
-          // the Ad failed to present .. show alert message
-          let alert = UIAlertController(title: "Rewarded ad isn't available yet.", message: "The rewarded ad cannot be shown at this time",preferredStyle: .alert)
-          let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] action in
-              self?.loadRewardVideoAd()
-          })
-          alert.addAction(alertAction)
-          self.present(alert, animated: true, completion: nil)
-        }
-    })
-
+    presentRewardVideo()
   }
 
 }
+    
 
+//MARK: - delegates extensions
 
-extension ViewController: YTPlayerViewDelegate {
-    func playerViewPreferredWebViewBackgroundColor(_ playerView: YTPlayerView) -> UIColor {
-        return UIColor.black
+// Admob ads
+extension ViewController: GADFullScreenContentDelegate {
+    
+    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) { print("ad presented.") }
+
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) { print("Ad dismissed.") }
+
+    func ad(_ ad: GADFullScreenPresentingAd,didFailToPresentFullScreenContentWithError error: Error) {
+      print("Ad failed to present with error: \(error.localizedDescription).")
+      let alert = UIAlertController(title: "Ad failed to present", message: "The Ad could not be presented.", preferredStyle: .alert)
+      let alertAction = UIAlertAction(title: "Try Again", style: .cancel, handler: { [weak self] action in self?.loadRewardVideoAd() })
+      alert.addAction(alertAction)
+      self.present(alert, animated: true, completion: nil)
     }
+}
+
+
+// youtube player
+extension ViewController: YTPlayerViewDelegate {
     
-//    func playerViewPreferredInitialLoading(_ playerView: YTPlayerView) -> UIView? {
-//        // Create a Custom loading view
-//        // let customLoadingView = UIView()
-//        // return customLoadingView
-//    }
-    
+    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
+        
+      switch state {
+          case .unstarted:
+              print("unstarted")
+              videoState = .notStarted
+            
+          case .ended:
+              print("ended")
+              endTimer()
+
+          case .playing:
+              print("playing")
+              startTimer()
+              
+          case .paused:
+              print("paused")
+              pauseTimer()
+              
+          case .buffering:
+              print("buffering")
+              
+          case .cued:
+              print("cued")
+              
+          case .unknown:
+              print("unknown")
+
+          @unknown default:
+              print("default")
+          }
+      }
 }

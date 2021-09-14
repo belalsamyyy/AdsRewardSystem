@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		41C6850D26EEABFB0016EB26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41C6850C26EEABFB0016EB26 /* Main.storyboard */; };
 		41C6851026EECCBE0016EB26 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C6850F26EECCBE0016EB26 /* DispatchQueue+Extensions.swift */; };
+		41D590E626EFCE64003DDD33 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D590E526EFCE64003DDD33 /* Int+Extensions.swift */; };
 		B3A9340B4278F9535409E4C5 /* Pods_AdsRewardSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 940573DEFB9EC819E11A50A4 /* Pods_AdsRewardSystem.framework */; };
 		D93A52FB26EDFD3E003482D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93A52FA26EDFD3E003482D2 /* AppDelegate.swift */; };
 		D93A52FD26EDFD3E003482D2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93A52FC26EDFD3E003482D2 /* SceneDelegate.swift */; };
@@ -26,6 +27,7 @@
 		3B4B127E79B1D6125476497A /* Pods-AdsRewardSystem.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdsRewardSystem.release.xcconfig"; path = "Target Support Files/Pods-AdsRewardSystem/Pods-AdsRewardSystem.release.xcconfig"; sourceTree = "<group>"; };
 		41C6850C26EEABFB0016EB26 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		41C6850F26EECCBE0016EB26 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
+		41D590E526EFCE64003DDD33 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		940573DEFB9EC819E11A50A4 /* Pods_AdsRewardSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdsRewardSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D93A52F726EDFD3D003482D2 /* AdsRewardSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdsRewardSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D93A52FA26EDFD3E003482D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				41C6850F26EECCBE0016EB26 /* DispatchQueue+Extensions.swift */,
 				D954C45926EF9E8200B0F95F /* UIViewController+Extensions.swift */,
 				D954C45B26EFA86500B0F95F /* String+Extensions.swift */,
+				41D590E526EFCE64003DDD33 /* Int+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				D93A52F326EDFD3D003482D2 /* Sources */,
 				D93A52F426EDFD3D003482D2 /* Frameworks */,
 				D93A52F526EDFD3D003482D2 /* Resources */,
+				8D20850F969133ECA5DD5898 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -243,6 +247,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8D20850F969133ECA5DD5898 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AdsRewardSystem/Pods-AdsRewardSystem-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AdsRewardSystem/Pods-AdsRewardSystem-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AdsRewardSystem/Pods-AdsRewardSystem-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -253,6 +274,7 @@
 				D93A52FF26EDFD3E003482D2 /* ViewController.swift in Sources */,
 				D93A531526EDFDCD003482D2 /* UserDefaultsManager.swift in Sources */,
 				D93A52FB26EDFD3E003482D2 /* AppDelegate.swift in Sources */,
+				41D590E626EFCE64003DDD33 /* Int+Extensions.swift in Sources */,
 				D954C45A26EF9E8300B0F95F /* UIViewController+Extensions.swift in Sources */,
 				D954C45C26EFA86500B0F95F /* String+Extensions.swift in Sources */,
 				41C6851026EECCBE0016EB26 /* DispatchQueue+Extensions.swift in Sources */,
