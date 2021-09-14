@@ -1,0 +1,6 @@
+framework module DesignX {
+  umbrella header "DesignX-umbrella.h"
+
+  export *
+  module * { export * }
+}

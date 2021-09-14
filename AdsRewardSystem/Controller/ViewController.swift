@@ -4,7 +4,7 @@
 //
 //  Created by Belal Samy on 12/09/2021.
 //
-import UIKit
+
 import GoogleMobileAds
 import youtube_ios_player_helper
 import DesignX
@@ -21,11 +21,13 @@ class ViewController: UIViewController {
     
     // The video player
     var YoutubePlayer = YTPlayerView()
-    var videoState = VideoState.notStarted
+    var timerState = TimerState.notStarted
     
     // The reward timer.
     var rewardTimer: Timer?
     var timeRemaining = 0 // in seconds
+    var lastPausedTime: Int?
+    
     var pauseDate: Date?
     var previousFireDate: Date?
     
@@ -51,7 +53,7 @@ class ViewController: UIViewController {
   let videoUrl = "https://www.youtube.com/watch?v=4B7UfUX2wz4"
     
   // Video state
-  enum VideoState {
+  enum TimerState {
     case notStarted
     case playing
     case paused
@@ -72,7 +74,7 @@ class ViewController: UIViewController {
       loadBannerAd()
       
       // youtube video player
-      startYoutubeVideo(url: videoUrl)
+      loadYoutubeVideo(from: videoUrl)
       
       // Pause timer when application is backgrounded.
       NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -87,11 +89,11 @@ class ViewController: UIViewController {
     
     func startTimer() {
         
-        if videoState == .notStarted {
+        if timerState == .notStarted {
             getVideoDuration()
         }
         
-        videoState = .playing
+        timerState = .playing
         rewardTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerTick), userInfo: nil, repeats: true)
     }
     
@@ -122,21 +124,21 @@ class ViewController: UIViewController {
     }
     
     func endTimer() {
-        videoState = .ended
+        timerState = .ended
         timeRemaining = 0
         print("The timer ends !")
         timeRemainingLabel.text = "The timer ends !"
         
         rewardTimer?.invalidate()
-        rewardTimer = nil
+        //rewardTimer = nil
     }
     
     func pauseTimer() {
         // Pause the timer if it is currently playing.
-        if videoState != .playing {
+        if timerState != .playing {
           return
         }
-        videoState = .paused
+        timerState = .paused
 
         // Record the relevant pause times.
         pauseDate = Date()
@@ -148,16 +150,18 @@ class ViewController: UIViewController {
     
     func resumeTimer() {
         // Resume the timer if it is currently paused.
-        if videoState != .paused {
+        if timerState != .paused {
           return
         }
-        videoState = .playing
+        timerState = .playing
 
         // Calculate amount of time the app was paused.
         let pauseTime = (pauseDate?.timeIntervalSinceNow)! * -1
 
         // Set the timer to start firing again.
         rewardTimer?.fireDate = (previousFireDate?.addingTimeInterval(pauseTime))!
+        
+        pauseTimer()
     }
     
     
@@ -174,7 +178,7 @@ class ViewController: UIViewController {
     
 //MARK: - functions - Youtube Video player
     
-    func startYoutubeVideo(url: String) {
+    func loadYoutubeVideo(from url: String) {
         // youtube video view
         view.addSubview(YoutubePlayer)
         YoutubePlayer.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
@@ -217,13 +221,16 @@ class ViewController: UIViewController {
     
   fileprivate func loadRewardVideoAd() {
     GADRewardedAd.load(withAdUnitID: "ca-app-pub-3940256099942544/1712485313", request: GADRequest())  { (ad, error) in
+        
       if let error = error {
         print("Rewarded ad failed to load with error: \(error.localizedDescription)")
         return
       }
+        
       print("Reward Video Loading Succeeded")
       self.rewardedAd = ad
       self.rewardedAd?.fullScreenContentDelegate = self
+      self.earnCoins(10)
     }
   }
     
@@ -261,7 +268,6 @@ class ViewController: UIViewController {
            if let ad = self.rewardedAd {
               // reward the user
               ad.present(fromRootViewController: self) {
-              self.earnCoins(self.rewardValue)
             }
              
             } else {
@@ -284,7 +290,7 @@ class ViewController: UIViewController {
       print("Reward received with \(coins) coins")
       Defaults.coins += coins
       coinCountLabel.text = "Coins: \(Defaults.coins)"
-      let rewardMessage = coins > 1 ? " +\(coins) coin" : " +\(coins) coins"
+      let rewardMessage = coins == 1 ? " +\(coins) coin" : " +\(coins) coins"
       self.showToast(message: rewardMessage, font: .systemFont(ofSize: 18))
   }
     
@@ -335,7 +341,7 @@ extension ViewController: YTPlayerViewDelegate {
       switch state {
           case .unstarted:
               print("unstarted")
-              videoState = .notStarted
+              timerState = .notStarted
             
           case .ended:
               print("ended")
