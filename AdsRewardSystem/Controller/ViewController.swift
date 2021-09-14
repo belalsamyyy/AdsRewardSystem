@@ -129,8 +129,11 @@ class ViewController: UIViewController {
         timeRemaining = 0
         timeRemainingLabel.text = "The timer ends !"
         
+        // fix timer issues after replay
+        resetTimer()
+        
         rewardTimer?.invalidate()
-        //rewardTimer = nil
+        rewardTimer = nil
     }
     
     func pauseTimer() {
@@ -162,6 +165,12 @@ class ViewController: UIViewController {
         rewardTimer?.fireDate = (previousFireDate?.addingTimeInterval(pauseTime))!
         
         pauseTimer()
+    }
+    
+
+    func resetTimer() {
+        timerState = .notStarted
+        YoutubePlayer.stopVideo()
     }
     
     
@@ -230,7 +239,6 @@ class ViewController: UIViewController {
       print("Reward Video Loading Succeeded")
       self.rewardedAd = ad
       self.rewardedAd?.fullScreenContentDelegate = self
-      self.earnCoins(10)
     }
   }
     
@@ -346,7 +354,6 @@ extension ViewController: YTPlayerViewDelegate {
           case .ended:
               print("ended")
               endTimer()
-              rewardTimer?.invalidate()
 
           case .playing:
               print("playing")
@@ -357,8 +364,7 @@ extension ViewController: YTPlayerViewDelegate {
               pauseTimer()
               
           case .buffering:
-              print("buffering") // replay "i think"
-              timerState = .notStarted
+              print("buffering")
               
           case .cued:
               print("cued")

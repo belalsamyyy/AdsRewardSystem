@@ -9,7 +9,7 @@ import Foundation
 
 extension DispatchQueue {
 
-    static func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
+    static func background(delay: Double = 3.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
         DispatchQueue.global(qos: .background).async {
             background?()
             if let completion = completion {
