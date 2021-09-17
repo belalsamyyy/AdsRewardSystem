@@ -12,3 +12,6 @@ add to your Podfile, then `pod install`
   pod 'youtube-ios-player-helper'
   pod 'DesignX'
 ```
+
+`Important Note`
+Make sure you select a development team in the Signing & Capabilities editor, otherwise the admob ads won't show up and it will mislead you with strange errors
