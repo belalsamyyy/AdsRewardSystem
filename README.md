@@ -15,3 +15,12 @@ add to your Podfile, then `pod install`
 
 `Important Note`
 Make sure you select a development team in the Signing & Capabilities editor, otherwise the admob ads won't show up and it will mislead you with strange errors
+
+## Author
+
+BelalSamy, belalsamy10@gmail.com
+
+## License
+
+AdsRewardSystem is available under the MIT license. See the LICENSE file for more info.
+
